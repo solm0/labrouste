@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Labrouste</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      position: absolute;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(237, 237, 237);
+    }
+
+    @font-face {
+      font-family: 'font';
+      src: url('./Labrouste-Regular.ttf');
+      }
+    @font-face {
+      font-family: 'notdef';
+      src: url(./AdobeBlank.ttf);
+    }
+    #fontInput {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 90%;
+      background-color: rgb(237, 237, 237);
+      border: none;
+      
+      font-family: 'font','notdef';
+      font-size: 90px;
+      overflow: auto;
+      text-align: center;
+      outline: none;
+      word-break: keep-all;
+    }
+    .buttonarea {
+      position: fixed;
+      right: 250px;
+      display: flex;
+      flex-direction: column;
+      font-size: 20px;
+    }
+    .buttonarea2 {
+      position: fixed;
+      left: 250px;
+      display: flex;
+      flex-direction: column;
+      font-size: 20px;
+    }
+    .button {
+      font-family: 'Courier New', Courier, monospace;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <textarea id="fontInput" oninput="applySmartQuotes()" spellcheck="false" placeholder="다람쥐 헌 쳇바퀴에 타고파" ></textarea>
+  <div class="buttonarea">
+    <button class="button" onclick="changeFontSize('small')">50px</button>
+    <button class="button" onclick="changeFontSize('medium')">90px</button>
+    <button class="button" onclick="changeFontSize('large')">150px</button>
+  </div>
+  <div class="buttonarea2">
+    <button class="button" onclick="changeFontSize('left')">left</button>
+    <button class="button" onclick="changeFontSize('center')">center</button>
+    <button class="button" onclick="changeFontSize('right')">right</button>
+  </div>
+
+
+
+
+  <script>
+      var fontInput;
+      
+
+          // 스마트 따옴표로 변환하기
+
+      function convertToSmartQuotes(input) {
+        return input
+        .replace(/(^|[-\u2014\s(\["])'/g, "$1‘") // 시작하는 작은따옴표
+        .replace(/'/g, '’') // 끝나는 작은따옴표
+        .replace(/(^|[-\u2014\s(\["])"/g, "$1“") // 시작하는 큰따옴표
+        .replace(/"/g, '”'); // 끝나는 큰따옴표
+      }
+      function applySmartQuotes() {
+        fontInput = document.getElementById('fontInput');
+        var convertedText = convertToSmartQuotes(fontInput.value);
+        fontInput.value = convertedText;
+      }
+
+
+          // 폰트 인풋 받기
+
+      function handleInput() {
+          fontInput = document.getElementById('fontInput');
+          var displayArea = document.getElementById('displayArea');
+          displayArea.innerText = fontInput.value;
+        }
+
+
+          // 폰트 사이즈 바꾸기
+
+        function changeFontSize(size) {
+          fontInput = document.getElementById('fontInput');
+          switch (size) {
+            case 'small':
+              fontInput.style.fontSize = '50px';
+              break;
+            case 'medium':
+              fontInput.style.fontSize = '90px';
+              break;
+            case 'large':
+              fontInput.style.fontSize = '150px';
+              break;
+          }
+        }
+
+
+          // 폰트 정렬 바꾸기
+
+        function changeTextAlignment(align) {
+          fontInput = document.getElementById("fontInput");
+          fontInput.style.textAlign = align;
+        }
+        document.querySelector(".buttonarea2 button:nth-child(1)").addEventListener("click", function () {
+          changeTextAlignment("left");
+        });
+        document.querySelector(".buttonarea2 button:nth-child(2)").addEventListener("click", function () {
+          changeTextAlignment("center");
+        });
+        document.querySelector(".buttonarea2 button:nth-child(3)").addEventListener("click", function () {
+          changeTextAlignment("right");
+        });
+
+  </script>
+</body>
+</html>
